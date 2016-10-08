@@ -1,0 +1,32 @@
+{
+  "name": "lockpik",
+  "version": "0.0.1",
+  "description": "lockpik",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "sprusr",
+  "license": "ISC",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "redis": "^2.6.2",
+    "sequelize": "^3.24.3"
+  },
+  "devDependencies": {},
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/sprusr/lockpik.git"
+  },
+  "keywords": [
+    "lock",
+    "key",
+    "lockpick",
+    "lockpik"
+  ],
+  "bugs": {
+    "url": "https://github.com/sprusr/lockpik/issues"
+  },
+  "homepage": "https://github.com/sprusr/lockpik#readme"
+}

@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Lockpik</title>
+</head>
+<body>
+  <h1>Lockpik</h1>
+  <h2>Add lock</h2>
+  <form action="/api/code" method="post" id="postForm">
+    <label for="code">Code</label><input type="text" id="code" name="code">
+    <button id="getLocation">Get Location</button>
+    <label for="lat">Lat</label><input type="text" name="lat" id="lat">
+    <label for="lon">Lon</label><input type="text" name="lon" id="lon">
+    <input type="submit">
+  </form>
+  <h2>Get locks</h2>
+  <form action="/api/code" method="get" id="getForm">
+    <label for="getCode">Code</label><input type="text" id="getCode" name="code">
+    <input type="submit">
+  </form>
+  <div id="map" style="width: 100%; height: 500px;"></div>
+  <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+  <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA3-ocbyScyWw4g5dnHtzOOtLmd1dOF0Jc"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.googlemap/1.5/jquery.googlemap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jQuery-Geolocation/1.0.50/jquery.geolocation.min.js"></script>
+  <script type="text/javascript">
+    $(function() {
+      $("#map").googleMap({
+        zoom: 4,
+        coords: [48.895651, 2.290569],
+        type: "ROADMAP"
+      });
+    });
+
+    $('#getForm').submit(function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        url: $('#getForm').attr('action'),
+        data: $('#getForm').serialize(),
+        success: function(res) {
+          $("#map").googleMap();
+          res.forEach(function(coords) {
+            $("#map").addMarker({
+              coords: coords
+            });
+          });
+        }
+      });
+    });
+
+    $('#getLocation').on('click', function(e) {
+      $.geolocation.get({
+        win: function(position) {
+          console.log(position);
+          $('#lat').val(position.coords.latitude);
+          $('#lon').val(position.coords.longitude);
+        }
+      });
+    });
+
+    $('#postForm').submit(function(e) {
+      e.preventDefault();
+
+      $.ajax({
+        type: "POST",
+        url: $('#postForm').attr('action'),
+        data: $('#postForm').serialize(),
+        success: function(res) {
+          console.log(res);
+        }
+      });
+    });
+  </script>
+</body>
+</html>
